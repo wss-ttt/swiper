@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">1</div>
+        <div class="swiper-slide">2</div>
+        <div class="swiper-slide">3</div>
+        <div class="swiper-slide">4</div>
+      </div>
+    </div>
+    <button type="button">确定</button>
+    <button type="button">确定2</button>
+    <script>
+      var SwiperClass = function SwiperClass(params) {
+        params = params || {}
+        var self = this
+        self.params = params
+        // Events
+        self.eventsListeners = {}
+      }
+
+      // 监听事件
+      SwiperClass.prototype.on = function (events, handler, priority) {
+        var self = this
+        if (typeof handler !== 'function') {
+          return self
+        }
+        var method = priority ? 'unshift' : 'push'
+        events.split(' ').forEach(function (item) {
+          if (!self.eventsListeners[item]) {
+            self.eventsListeners[item] = []
+          }
+          self.eventsListeners[item][method](handler)
+        })
+        return self
+      }
+      // 触发事件
+      SwiperClass.prototype.emit = function emit() {
+        var self = this
+        // 优化代码
+        var args = [].slice.call(arguments) // 就这一行代码就可以了
+
+        if (!self.eventsListeners) {
+          return self
+        }
+        var events
+        var data
+        var context
+        if (typeof args[0] === 'string' || Array.isArray(args[0])) {
+          events = args[0]
+          data = args.slice(1) // splice slice concat
+          context = self
+        } else {
+          events = args[0].events
+          data = args[0].data
+          context = args[0].context || self
+        }
+        var eventsArray = Array.isArray(events) ? events : events.split(' ')
+        eventsArray.forEach(function (event) {
+          if (self.eventsListeners && self.eventsListeners[event]) {
+            self.eventsListeners[event].forEach(item => {
+              item.apply(context, data) // call
+            })
+          }
+        })
+        return self
+      }
+
+      SwiperClass.prototype.off = function off(events, handler) {
+        var self = this
+        if (!self.eventsListeners) {
+          return self
+        }
+        events.split(' ').forEach(function (event) {
+          if (typeof handler === 'undefined') {
+            self.eventsListeners[event] = []
+          } else if (
+            self.eventsListeners[event] &&
+            self.eventsListeners[event].length
+          ) {
+            self.eventsListeners[event].forEach(function (eventHandler, index) {
+              if (
+                eventHandler === handler ||
+                (eventHandler.f7proxy && eventHandler.f7proxy === handler)
+              ) {
+                self.eventsListeners[event].splice(index, 1)
+              }
+            })
+          }
+        })
+        return self
+      }
+
+      SwiperClass.prototype.once = function once(events, handler, priority) {
+        var self = this
+        if (typeof handler !== 'function') {
+          return self
+        }
+        function onceHandler() {
+          debugger
+          var args = [],
+            len = arguments.length
+          while (len--) args[len] = arguments[len]
+
+          handler.apply(self, args)
+          self.off(events, onceHandler)
+          if (onceHandler.f7proxy) {
+            delete onceHandler.f7proxy
+          }
+        }
+        onceHandler.f7proxy = handler
+        return self.on(events, onceHandler, priority)
+      }
+
+      var Swiper = (function (SwiperClass) {
+        function Swiper() {
+          debugger
+          var assign
+
+          var args = [],
+            len = arguments.length
+          while (len--) args[len] = arguments[len]
+
+          // var args = [].slice.call(arguments)
+          var el
+          var params
+          if (
+            args.length === 1 &&
+            args[0].constructor &&
+            args[0].constructor === Object
+          ) {
+            params = args[0]
+          } else {
+            // el: 获取的是 '.swiper-container'
+            // params: 获取的是第二个参数
+            ;(assign = args), (el = assign[0]), (params = assign[1])
+          }
+          if (!params) {
+            params = {}
+          }
+
+          // params = Utils.extend({}, params)
+          /* if (el && !params.el) {
+            params.el = el
+          } */
+
+          SwiperClass.call(this, params)
+          console.log(this)
+          // Swiper Instance
+          var swiper = this
+
+          // Init
+          if (swiper.params.init) {
+            swiper.init()
+          }
+
+          // Return app instance
+          return swiper
+        }
+
+        if (SwiperClass) Swiper.__proto__ = SwiperClass
+        Swiper.prototype = Object.create(SwiperClass && SwiperClass.prototype)
+        Swiper.prototype.constructor = Swiper
+        debugger
+        var s = new Swiper()
+        console.log(s)
+        // Swiper init方法 update by wss
+        Swiper.prototype.init = function () {
+          var swiper = this
+          console.log('init')
+        }
+
+        return Swiper
+      })(SwiperClass)
+    </script>
+    <script>
+      var btns = document.querySelectorAll('button')
+      var swiper = new SwiperClass()
+
+      function a(data) {
+        console.log('a-a')
+        console.log('data', data)
+      }
+
+      function b(data) {
+        console.log('a-b')
+        console.log('data', data)
+      }
+      swiper.on('a', a)
+
+      swiper.on('a', b)
+
+      /* swiper.once('a', function a (data) {
+        console.log(data)
+      }) */
+
+      btns[0].onclick = function () {
+        swiper.emit('a', {
+          name: '乔峰'
+        })
+      }
+      btns[1].onclick = function () {
+        swiper.off('a', a)
+      }
+
+      var s = new Swiper('.swiper-container')
+    </script>
+  </body>
+</html>
