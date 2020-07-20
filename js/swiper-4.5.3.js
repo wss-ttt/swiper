@@ -3721,6 +3721,8 @@
       if (args.length === 1 && args[0].constructor && args[0].constructor === Object) {
         params = args[0];
       } else {
+        // el: 获取的是 '.swiper-container'
+        // params: 获取的是第二个参数
         (assign = args, el = assign[0], params = assign[1]);
       }
       if (!params) { params = {}; }
@@ -3730,6 +3732,7 @@
 
       SwiperClass.call(this, params);
 
+      // 这里使用了双重循环
       Object.keys(prototypes).forEach(function (prototypeGroup) {
         Object.keys(prototypes[prototypeGroup]).forEach(function (protoMethod) {
           if (!Swiper.prototype[protoMethod]) {
@@ -4040,6 +4043,7 @@
       return swiper;
     };
 
+    // Swiper init方法 update by wss
     Swiper.prototype.init = function init () {
       var swiper = this;
       if (swiper.initialized) { return; }
