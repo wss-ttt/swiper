@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/swiper-4.5.3.css" />
+    <style>
+      .swiper-container {
+        width: 200px;
+        height: 200px;
+        background: #ccc;
+      }
+      .swiper-slide {
+        height: 150px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">1</div>
+        <div class="swiper-slide">2</div>
+        <div class="swiper-slide">3</div>
+        <div class="swiper-slide">4</div>
+        <div class="swiper-slide">5</div>
+        <div class="swiper-slide">6</div>
+        <div class="swiper-slide">7</div>
+        <div class="swiper-slide">8</div>
+      </div>
+    </div>
+    <!-- <script src="js/swiper-4.5.3.js"></script> -->
+    <script src="js/swiper-6.0.4.js"></script>
+    <script>
+      let slides = document.querySelectorAll('.swiper-slide')
+      // 动态设置背景颜色
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.background = i % 2 ? '#1acd7e' : '#fb3'
+      }
+      let swiper = new Swiper('.swiper-container', {
+        autoplay: true,
+        slidesPerView: '4', //  显示区域显示几个
+        direction : 'vertical',
+        loop: true
+      })
+    </script>
+  </body>
+</html>
