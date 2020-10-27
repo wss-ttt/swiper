@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="css/swiper-4.5.3.css" />
+    <style>
+      .swiper-container {
+        width: 200px;
+        height: 200px;
+        background: #ccc;
+      }
+      .swiper-slide {
+        height: 150px;
+      }
+    </style>
+  </head>
+  <body>
+    <ul class="nav nav-tabs" id="myTabs">
+      <li class="active">
+        <a href="#home" >Home</a>
+      </li>
+      <li>
+        <a href="#profile">Profile</a>
+      </li>
+      <li>
+        <a href="#messages">Messages</a>
+      </li>
+      <li>
+        <a href="#settings">Settings</a>
+      </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div class="tab-pane active" id="home">
+        <div class="swiper-container sc1">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">1</div>
+            <div class="swiper-slide">2</div>
+            <div class="swiper-slide">3</div>
+            <div class="swiper-slide">4</div>
+            <div class="swiper-slide">5</div>
+            <div class="swiper-slide">6</div>
+            <div class="swiper-slide">7</div>
+            <div class="swiper-slide">8</div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane" id="profile">
+        <div class="swiper-container sc2">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">1</div>
+            <div class="swiper-slide">2</div>
+            <div class="swiper-slide">3</div>
+            <div class="swiper-slide">4</div>
+            <div class="swiper-slide">5</div>
+            <div class="swiper-slide">6</div>
+            <div class="swiper-slide">7</div>
+            <div class="swiper-slide">8</div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane" id="messages">messages</div>
+      <div class="tab-pane" id="settings">settings</div>
+    </div>
+
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <!-- <script src="js/swiper-6.0.4.js"></script> -->
+    <script src="js/swiper-4.5.3.js"></script>
+    <script>
+      let swiper1, swiper2;
+      $('#myTabs a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show') //
+        let index = $(this).parent().index()
+        if(index === 0) {
+          // 核心代码
+          swiper1.autoplay.start()
+          swiper2.autoplay.stop()
+        }
+        if(index === 1) {
+          // 核心代码
+          swiper1.autoplay.stop()
+          swiper2.autoplay.start()
+        }
+      })
+      let slides1 = document.querySelectorAll('.sc1 .swiper-slide')
+      // 动态设置背景颜色
+      for (let i = 0; i < slides1.length; i++) {
+        slides1[i].style.background = i % 2 ? '#1acd7e' : '#fb3'
+      }
+
+      let slides2 = document.querySelectorAll('.sc2 .swiper-slide')
+      // 动态设置背景颜色
+      for (let i = 0; i < slides2.length; i++) {
+        slides2[i].style.background = i % 2 ? '#aaf' : '#fbb'
+      }
+      sw1()
+      sw2()
+      
+      function sw1() {
+        swiper1 = new Swiper('.sc1', {
+          autoplay: true,
+          slidesPerView: '4', //  显示区域显示几个
+          direction: 'vertical',
+          loop: true,
+          observer: true,
+          observeParents: true,
+          autoplayDisableOnInteraction: false,
+          autoplay: {
+            delay: 1000 //时间 毫秒
+          }
+        })
+      }
+
+      function sw2() {
+        swiper2 = new Swiper('.sc2', {
+          autoplay: true,
+          slidesPerView: '4', //  显示区域显示几个
+          direction: 'vertical',
+          loop: true,
+          observer: true,
+          observeParents: true,
+          autoplayDisableOnInteraction: false,
+          autoplay: {
+            delay: 1000 //时间 毫秒
+          }
+        })
+      }
+    </script>
+  </body>
+</html>
