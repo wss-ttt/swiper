@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="css/swiper-4.5.3.css" />
+  <style>
+    .swiper-container {
+      width: 200px;
+      height: 200px;
+      background: #ccc;
+    }
+
+    .swiper-slide {
+      height: 150px;
+    }
+    .show {
+      width: 200px;
+      height: 120px;
+      border: 1px solid #ccc;
+      margin: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+    </div>
+  </div>
+  <div class="show show1">
+  </div>
+  <script src="js/jquery.js"></script>
+  <script src="js/swiper-6.0.4.js"></script>
+  <script>
+    let slides = document.querySelectorAll('.swiper-slide')
+    // 动态设置背景颜色
+    for (let i = 0; i < slides.length; i++) {
+      slides[i].style.background = i % 2 ? '#1acd7e' : '#fb3'
+    }
+    let data = ['111', '222', '333', '444', '555', '666', '777', '888']
+    function initUI() {
+      let html = ''
+      data.forEach(item => {
+        html += `<div class="swiper-slide">${item}</div>`
+      })
+      $('.swiper-wrapper').html(html)
+    }
+    initUI()
+    let swiper = new Swiper('.swiper-container', {
+      autoplay: true,
+      // slidesPerView: '1', //  显示区域显示几个
+      direction: 'vertical',
+      loop: false,
+      on: {
+        slideChangeTransitionEnd: function (swiper) {
+          // console.log('swiper', swiper)
+        },
+        slideNextTransitionEnd() {
+          // console.log('文本值realIndex', $('.swiper-slide').eq(this.realIndex).html())
+          // console.log('文本值activeIndex', $('.swiper-slide').eq(this.activeIndex).html())
+          console.log('realIndex', this.realIndex)
+          console.log('activeIndex', this.activeIndex)
+          // 这个地方需要使用activeIndex这个属性值
+          $('.show1').html($('.swiper-slide').eq(this.activeIndex).html())
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
