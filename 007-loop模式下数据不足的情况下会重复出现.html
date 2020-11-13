@@ -78,7 +78,7 @@
         // 3.初始化swiper
         initSwiper()
       } else {
-        // 获取级j的高度
+        // 获取父级的高度
         let h = $('.swiper-wrapper').height() / 4
         // 求出每个swiper-slide的高度
         $('.s1 .swiper-wrapper .swiper-slide').css('height', h)
@@ -87,7 +87,7 @@
 
     function getData() {
       // 在这个地进行控制数据量
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 3; i++) {
         data.push(i)
       }
     }
