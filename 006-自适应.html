@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/swiper-4.5.3.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    .container {
+      height: 100%;
+      display: flex;
+    }
+
+    .container>div {
+      flex: 1;
+    }
+
+    .container .left>div {
+      height: 50%;
+    }
+
+    /*这个代码不能少 也就是必须给swiper-container指定高度,此处是和自己的父级一样高*/
+    .s1 {
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="left">
+      <div class="up">
+        <div class="swiper-container s1">
+          <div class="swiper-wrapper">
+          </div>
+        </div>
+      </div>
+      <div class="down"></div>
+    </div>
+    <div class="right"></div>
+  </div>
+  <script src="js/jquery.js"></script>
+  <script src="js/swiper-6.0.4.js"></script>
+  <script>
+    let swiper1;
+
+    $(function() {
+      initUI()
+      initSwiper()
+    })
+
+    function initUI() {
+      let data = ['0000', '1111', '2222', '3333', '4444', '5555']
+      let html = ''
+      data.forEach((item, index) => {
+        let  color =  index % 2 ? '#1acd7e' : '#fb3'
+        html += `<div class="swiper-slide" style="background: ${color}">${item}</div>`
+      })
+      $('.s1 .swiper-wrapper').html(html)
+    }
+
+    function initSwiper() {
+      swiper1 = new Swiper('.s1', {
+        autoplay: true,
+        slidesPerView: '2', //  显示区域显示几个
+        direction: 'vertical',
+        loop: false,
+      })
+    }
+
+  </script>
+</body>
+
+</html>
